@@ -1,0 +1,14 @@
+/* .plain and .foo\+bar match classes used in escaped_class.jsx.
+   .unused\+name is also escaped, but nothing references it. */
+
+.plain {
+	color: red;
+}
+
+.foo\+bar {
+	color: blue;
+}
+
+.unused\+name {
+	color: green;
+}

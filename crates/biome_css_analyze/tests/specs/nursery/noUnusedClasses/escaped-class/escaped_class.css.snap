@@ -1,0 +1,46 @@
+---
+source: crates/biome_css_analyze/tests/spec_tests.rs
+expression: escaped_class.css
+---
+# Input
+```css
+/* .plain and .foo\+bar match classes used in escaped_class.jsx.
+   .unused\+name is also escaped, but nothing references it. */
+
+.plain {
+	color: red;
+}
+
+.foo\+bar {
+	color: blue;
+}
+
+.unused\+name {
+	color: green;
+}
+
+```
+
+# Diagnostics
+```
+escaped_class.css:12:1 lint/nursery/noUnusedClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i The CSS class unused\+name is not referenced in any HTML or JSX file.
+  
+    10 │ }
+    11 │ 
+  > 12 │ .unused\+name {
+       │ ^^^^^^^^^^^^^
+    13 │ 	color: green;
+    14 │ }
+  
+  i Unused CSS classes add dead weight to your stylesheet, increase bundle size, and make the codebase harder to maintain.
+  
+  i Either use this class somewhere or remove the selector.
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/9156 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
